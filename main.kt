@@ -1,75 +1,64 @@
-// Задание 1. Создать переменные всех пройденных типов данных и инициализировать их значения.
+// Заданиу 
+//Написать консольную игру “угадай число”. Рандомно генерируем число от 0 до 10. Пользователю дается 3 попытки угадать его. При каждой попытке компьютер должен сообщить, больше или меньше загаданное число. 
+//После победы /проигрыша выводится запрос: “Повторить игру еще раз? 1 - да/0 - нет” (1 - повторить, 0 - нет)
+//* Сделать несколько уровней сложности игры, например, диапазон значений от 0 до 100 и попыток 5-7 или кастомные настройки от пользователя (запрашиваем у него желаемый диапазон и количество попыток)
+
+
+import java.util.Scanner
+import kotlin.random.Random
+
+
 
 fun main() {
-    val a: Byte = 10
-    val b: Short = 100
-    val c: Int = 1000
-    val d: Long = 10000L
+    val scanner = Scanner(System.`in`)
+    var playAgain = 1
 
-    val e: Float = 3.14F
-    val f: Double = 3.14159
+    while (playAgain == 1) {
+        println("Выберите уровень сложности:")
+        println("1 - Легкий (число от 0 до 10, 3 попытки)")
+        println("2 - Сложный (число от 0 до 100, 5 попыток)")
+        print("Ваш выбор: ")
 
-    val g: Char = 'A'
-    val h: String = "Hello"
-    val i: Boolean = true
+        val level = scanner.nextInt()
 
-    val j: Number = 10
-    val k: Any = "Hello"
+        val maxNumber: Int
+        val attempts: Int
 
-}
-
-
-// Задание 2. Написать метод, которому в качестве параметра передается строка, обозначающая имя. Метод должен вывести в консоль сообщение «Привет, указанное_имя!».
-
-fun main() {
-    sayHello("Полина")
-}
-
-fun sayHello(name: String) {
-    println("Привет, $name!")
-}
-
-
-// Задание 3.Написать метод, которому в качестве параметра передается целое число. Метод должен вернуть true, если число отрицательное, и вернуть false если положительное.
-
-fun main() {
-    println(isNegative(-5))
-    println(isNegative(10))
-}
-
-fun isNegative(number: Int): Boolean {
-    return number < 0
-}
-
-
-// Задание 4. Написать метод, которому в качестве параметра передается целое число, метод должен напечатать в консоль, положительное ли число передали или отрицательное.
-
-fun main() {
-    checkNumber(-5)
-    checkNumber(10)
-    checkNumber(0)
-}
-
-fun checkNumber(number: Int) {
-    if (number > 0) {
-        println("Число положительное")
-    } else if (number < 0) {
-        println("Число отрицательное")
-    } else {
-        println("Число равно нулю")
-    }
-}
-
-
-// Задание 5. Написать метод, который выводит последовательность чисел от 1000 до 0, кратных 3
-fun main() {
-    printNumbers()
-}
-
-fun printNumbers() {
-    for (i in 1000 downTo 0) {
-        if (i % 3 == 0) {
-            println(i)
+        if (level == 1) {
+            maxNumber = 10
+            attempts = 3
+        } else {
+            maxNumber = 100
+            attempts = 5
         }
+
+        val secretNumber = Random.nextInt(0, maxNumber + 1)
+        var guessed = false
+
+        println("Я загадал число от 0 до $maxNumber!")
+
+        for (i in 1..attempts) {
+            print("Попытка $i из $attempts. Введите число: ")
+            val userNumber = scanner.nextInt()
+
+            if (userNumber == secretNumber) {
+                println("Поздравляю! Ты угадал число!")
+                guessed = true
+                break
+            } else if (userNumber < secretNumber) {
+                println("Загаданное число больше")
+            } else {
+                println("Загаданное число меньше")
+            }
+        }
+
+        if (!guessed) {
+            println("Ты проиграл! Загаданное число: $secretNumber")
+        }
+
+        println("Повторить игру еще раз? 1 - да / 0 - нет")
+        playAgain = scanner.nextInt()
     }
+
+    println("Спасибо за игру!")
 }
