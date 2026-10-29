@@ -1,64 +1,25 @@
-// Заданиу 
-//Написать консольную игру “угадай число”. Рандомно генерируем число от 0 до 10. Пользователю дается 3 попытки угадать его. При каждой попытке компьютер должен сообщить, больше или меньше загаданное число. 
-//После победы /проигрыша выводится запрос: “Повторить игру еще раз? 1 - да/0 - нет” (1 - повторить, 0 - нет)
-//* Сделать несколько уровней сложности игры, например, диапазон значений от 0 до 100 и попыток 5-7 или кастомные настройки от пользователя (запрашиваем у него желаемый диапазон и количество попыток)
-
-
-import java.util.Scanner
-import kotlin.random.Random
-
-
 
 fun main() {
-    val scanner = Scanner(System.`in`)
-    var playAgain = 1
+    val employees = arrayOf(
+        Employee("Петров", "Алексей", "Иванович", "Менеджер",
+            "petrov@example.ru", "+7 (999) 123-45-67", 60000, 45),
 
-    while (playAgain == 1) {
-        println("Выберите уровень сложности:")
-        println("1 - Легкий (число от 0 до 10, 3 попытки)")
-        println("2 - Сложный (число от 0 до 100, 5 попыток)")
-        print("Ваш выбор: ")
+        Employee("Иванова", "Мария", "Сергеевна", "Бухгалтер",
+            "ivanova@example.ru", "+7 (999) 111-22-33", 55000, 38),
 
-        val level = scanner.nextInt()
+        Employee("Сидоров", "Иван", "Петрович", "Программист",
+            "sidorov@example.ru", "+7 (999) 222-33-44", 100000, 42),
 
-        val maxNumber: Int
-        val attempts: Int
+        Employee("Смирнова", "Анн", "Олеговна", "Дизайнер",
+            "smirnova@example.ru", "+7 (999) 333-44-55", 29),
 
-        if (level == 1) {
-            maxNumber = 10
-            attempts = 3
-        } else {
-            maxNumber = 100
-            attempts = 5
+        Employee("Козлов", "Дмитрий", "Андреевич", "Стажер",
+            "kozlov@example.ru", "+7 (999) 444-55-66", 22)
+    )
+
+    for (employee in employees) {
+        if (employee.age > 40) {
+            employee.printInfo()
         }
-
-        val secretNumber = Random.nextInt(0, maxNumber + 1)
-        var guessed = false
-
-        println("Я загадал число от 0 до $maxNumber!")
-
-        for (i in 1..attempts) {
-            print("Попытка $i из $attempts. Введите число: ")
-            val userNumber = scanner.nextInt()
-
-            if (userNumber == secretNumber) {
-                println("Поздравляю! Ты угадал число!")
-                guessed = true
-                break
-            } else if (userNumber < secretNumber) {
-                println("Загаданное число больше")
-            } else {
-                println("Загаданное число меньше")
-            }
-        }
-
-        if (!guessed) {
-            println("Ты проиграл! Загаданное число: $secretNumber")
-        }
-
-        println("Повторить игру еще раз? 1 - да / 0 - нет")
-        playAgain = scanner.nextInt()
     }
-
-    println("Спасибо за игру!")
 }
